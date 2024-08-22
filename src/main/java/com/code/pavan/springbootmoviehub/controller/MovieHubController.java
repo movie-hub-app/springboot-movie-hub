@@ -21,6 +21,7 @@ public class MovieHubController {
         return "Hello from Spring Boot Bean Stalk";
     }
 
+
     @GetMapping("/getMovies")
     public List<MovieHub> getAllMovies() {
         return movieRepository.findAll();
