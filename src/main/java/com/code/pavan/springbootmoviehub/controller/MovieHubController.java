@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movies")
-@CrossOrigin(origins = "http://localhost:5173")
 public class MovieHubController {
 
     private final MovieHubRepository movieRepository;
@@ -19,16 +17,22 @@ public class MovieHubController {
     }
 
     @GetMapping
+    public String hello() {
+        return "Hello from Spring Boot Bean Stalk";
+    }
+
+    @GetMapping("/getMovies")
     public List<MovieHub> getAllMovies() {
         return movieRepository.findAll();
     }
 
-    @PostMapping
+
+    @PostMapping("/saveMovie")
     public MovieHub createMovie(@RequestBody MovieHub movie) {
         return movieRepository.save(movie);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("movie/{id}")
     public MovieHub updateMovie(@PathVariable Long id, @RequestBody MovieHub movieDetails) {
         MovieHub movie = movieRepository.findById(id).orElseThrow();
         movie.setTitle(movieDetails.getTitle());
@@ -40,7 +44,7 @@ public class MovieHubController {
         return movieRepository.save(movie);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("movie/{id}")
     public void deleteMovie(@PathVariable Long id) {
         movieRepository.deleteById(id);
     }
